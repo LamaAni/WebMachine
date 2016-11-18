@@ -1,4 +1,6 @@
 // Implementation of a compositing window manager
+console.log('Starting window manager at ',require('process').cwd());
+console.log('Available paths:',module.paths);
 var x11 = require('x11');
 var EventEmitter = require('events').EventEmitter;
 
