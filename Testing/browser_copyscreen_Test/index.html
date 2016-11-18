@@ -1,0 +1,41 @@
+
+<!-- saved from url=(0075)file:///D:/Virtual%20Machines/Arch%20Test%20Box/ArchShare/TestNW/index.html -->
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Test app internal title.</title>
+	<style>
+		.OverlayWindow
+		{
+			background-color: red;
+		}
+		.OverlayWindow:hover
+		{
+			transition: background-color 0.5s;
+			background-color: green;
+		}
+	</style>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="drawpixmaptest.js"></script>
+</head>
+<body style="">
+	<div id='nodeactive_ok_boc' style="right: 0px;top:0px;width: 10px;height: 10px; position: absolute;"></div>
+	<button id='btn_show_devtools' style="top:0px;left:0px; position:absolute;">Show Dev-Tools</button> 
+	<button id='btn_exit' style="top:0px;right:30px; position:absolute;" onclick="process.exit();">Exit</button> 
+	<button id='btn_bindtownd' style="top:0px;left:300px; position:absolute;">Bind to Window</button> 
+	<div class="OverlayWindow" style="width: 100px;height: 30px;position: absolute;display: inline-flex;bottom: 2px;left: 2px;">
+		This is an internal div
+	</div>
+	<div class="OverlayWindow" style="width: 100px;height: 30px; background-color:green; position: absolute;display: inline-flex;bottom: 2px;left: 102px;">
+		This is an internal div
+	</div>
+	<div class="OverlayWindow" style="width: 100px;height: 30px; background-color:blue; position: absolute;display: inline-flex;bottom: 2px;left: 202px;">
+		This is an internal div
+	</div>	
+	<br/>
+	<br/>
+	<input type="text" id='wndBindID' />
+	<canvas id='test_canvas' style="width:700px;height:1px;margin: 40px; background-color: black;"></canvas>
+	<canvas id='webgl_canvas' style="width:100px;height:100px;position: :absolute;bottom: 0px; right: :0px; display: inline-block; background-color: yellow;"></canvas>
+</body>
+</html>

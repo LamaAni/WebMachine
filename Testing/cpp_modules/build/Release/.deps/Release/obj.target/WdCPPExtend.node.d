@@ -1,0 +1,1 @@
+cmd_Release/obj.target/WdCPPExtend.node := g++ -shared -pthread -rdynamic -m64  -Wl,-soname=WdCPPExtend.node -o Release/obj.target/WdCPPExtend.node -Wl,--start-group Release/obj.target/WdCPPExtend/WdCPPExtend.o -Wl,--end-group    

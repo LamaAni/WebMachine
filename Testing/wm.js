@@ -1,0 +1,219 @@
+// Implementation of a compositing window manager
+
+var x11 = require('x11');
+var EventEmitter = require('events').EventEmitter;
+
+// defining global variables. 
+var X, root, white; // the current display client, the root window, the background default.
+
+// defining the events to override by the window manager.
+var events = x11.eventMask.Button1Motion | x11.eventMask.ButtonPress | x11.eventMask.ButtonRelease | x11.eventMask.SubstructureNotify | x11.eventMask.SubstructureRedirect | x11.eventMask.Exposure;
+
+// active window frames, these frames are the containers for the app windows
+// and will redirect thire output rendering.
+var frames = {};
+
+// why is this nessesary??
+var dragStart = require('x11');
+
+// called to manager a specific windows.
+function ManageWindow(wid,record_damage=false)
+{
+    // should be called once for each window that appears. 
+    // managing event (map) for the window wid. 
+    console.log("MANAGE WINDOW: " + wid);
+
+    // gettng the current window attributes.
+    X.GetWindowAttributes(wid, function (err, attrs) {
+
+        if (attrs[8]) // override-redirect flag
+        {
+            // don't manage
+            console.log("don't manage");
+            X.MapWindow(wid);
+            return;
+        }
+
+        // frame id.
+        var fid = X.AllocID();
+        frames[fid] = 1;
+
+        // initial position?
+        var winX, winY;
+        winX = parseInt(300);
+        winY = parseInt(300);
+
+        // call and wait for callback. 
+        X.GetGeometry(wid, function (err, clientGeom) {
+            // got the window geometry.
+            console.log("window geometry: ", clientGeom);
+
+            // since we need to extend the window "area" since we have some graphics.
+            var width = clientGeom.width + 4;
+            var height = clientGeom.height + 24;
+            winX = clientGeom.xPos;
+            winY = clientGeom.yPos;
+
+            console.log("CreateWindow", fid, root, winX, winY, width, height);
+
+            // creates a parent window (the frame window that will contain the app window.
+            // we move this window.
+            X.CreateWindow(fid, root, winX, winY, width, height, 0, 0, 0, 0,
+                {
+                    backgroundPixel: white,
+                    eventMask: events
+                });
+
+            // creating a gradient to dispaly at the window top. 
+            var bggrad = X.AllocID();
+            X.Render.LinearGradient(bggrad, [0, 0], [0, 24],
+                [
+                    [0, [0, 0, 0xffff, 0xffffff]],
+                    [1, [0x00ff, 0xff00, 0, 0xffffff]]
+                ]);
+
+            var framepic = X.AllocID();
+            X.Render.CreatePicture(framepic, fid, X.Render.rgb24);
+
+            function __doDestroyWindow() {
+                // removing the window and if needed.
+                X.DestroyWindow(fid);
+                X.DestroyWindow(wid);
+            }
+            
+            var ee = new EventEmitter();
+            if (X.event_consumers[wid] == null) {
+                X.event_consumers[wid] = new EventEmitter();
+            }
+
+            X.event_consumers[wid].on('event', function (ev) {
+                if (ev.type === 17) // DestroyNotify
+                {
+                    console.log("Event called: " + ev.name + "(" + ev.type + ")");
+                    __doDestroyWindow();
+                }
+            });
+
+            X.event_consumers[fid] = ee;
+
+            if(record_damage)
+            {
+                var wdamage=X.AllocID();
+                X.Damage.Create(wdamage, wid, X.Damage.ReportLevel.RawRectangles);
+                console.log('registering damage for window '+wid);
+            }
+
+            ee.on('event', function (ev) {
+                if(record_damage)
+                    X.Damage.Subtract(wdamage, 0, 0);
+                if (ev.type === 17) // DestroyNotify
+                {
+                    console.log("Event called: " + ev.name + "(" + ev.type + ")");
+                    X.DestroyWindow(fid);
+                }
+                else if (ev.type == 4) { // button press? 
+                    if (ev.keycode == 3) {
+                        __doDestroyWindow();
+                    }
+                    else dragStart = { rootx: ev.rootx, rooty: ev.rooty, x: ev.x, y: ev.y, winX: winX, winY: winY };
+                }
+                else if (ev.type == 5) {
+                    dragStart = null;
+                }
+                else if (ev.type == 6) {
+                    winX = dragStart.winX + ev.rootx - dragStart.rootx;
+                    winY = dragStart.winY + ev.rooty - dragStart.rooty;
+                    X.MoveWindow(fid, winX, winY);
+                }
+                else if (ev.type == 12) {
+                    X.Render.Composite(3, bggrad, 0, framepic, 0, 0, 0, 0, 0, 0, width, height);
+                }
+                else { console.log(ev.name); }
+            });
+            X.ChangeSaveSet(1, wid);
+            X.ReparentWindow(wid, fid, 1, 21);
+            console.log("MapWindow", fid);
+            X.MapWindow(fid);
+            X.MapWindow(wid);
+        });
+    });
+}
+
+x11.createClient(function (err, display) {
+    // getting the display client.
+    X = display.client;
+    X.require('composite', function (err, Composite) {
+    X.require('damage', function (err, Damage) {
+    X.require('render', function (err, Render) {
+        X.Render = Render;
+        X.Damage=Damage;
+        X.Composite=Composite;
+        
+        // Getting basic params.
+        root = display.screen[0].root;
+        white = display.screen[0].white_pixel;
+        console.log(white);
+
+        // achived root window
+        console.log('root = ' + root);
+        Composite.RedirectSubwindows(root,Composite.Redirect.Automatic);
+
+        // change root window attributes to allow for redirect.
+        X.ChangeWindowAttributes(root, { eventMask: x11.eventMask.Exposure | x11.eventMask.SubstructureRedirect }, function (err) {
+            if (err.error == 10) {
+                console.error('Error: another window manager already running.');
+                process.exit(1);
+            }
+        });
+
+        // checking out the current window tree and managing any existing windows.
+        X.QueryTree(root, function (err, tree) {
+            tree.children.forEach(function(wid){ManageWindow(wid,false);});
+        });
+
+        // creating the gradient. 
+        X.bggrad = X.AllocID();
+        Render.LinearGradient(X.bggrad, [-10, 0], [0, 1000],
+            //RenderRadialGradient(pic_grad, [0,0], [1000,100], 10, 1000,
+            //RenderConicalGradient(pic_grad, [250,250], 360,
+            [
+                [0, [0, 0, 0, 0xffffff]],
+                //[0.1, [0xfff, 0, 0xffff, 0x1000] ] ,
+                //[0.25, [0xffff, 0, 0xfff, 0x3000] ] ,
+                //[0.5, [0xffff, 0, 0xffff, 0x4000] ] ,
+                [1, [0xffff, 0xffff, 0, 0xffffff]]
+            ]);
+
+        // creating the background root picture.
+        X.rootpic = X.AllocID();
+        Render.CreatePicture(X.rootpic, root, Render.rgb24);
+    })})});
+})
+    // done with definitions. Going to define events.
+    .on('error', function (err) {
+        console.error(err);
+    }).on('event', function (ev) {
+        // basically any other events, enumerated by name.
+        //console.log("Event called: "+ev.name+"("+ev.type+")"); 
+        if (ev.type === 20)        // MapRequest
+        {
+            //console.log(ev.type+ ": Map request.");
+            // called when the window presents itself. We go to manage the window event.
+            if (!frames[ev.wid])
+                ManageWindow(ev.wid,true);
+            return;
+        } else if (ev.type === 23) // ConfigureRequest
+        {
+            //console.log(ev.type+ ": Configure request.");
+            // called to configure a window, by the window, given the width and height of the window.
+            X.ResizeWindow(ev.wid, ev.width, ev.height);
+        } else if (ev.type === 12) {
+            //console.log(ev.type+ ": Expose request.");
+            // called to expose the window. This redraws the image on the window.
+            //console.log('EXPOSE', ev);
+            X.Render.Composite(3, X.bggrad, 0, X.rootpic, 0, 0, 0, 0, 0, 0, 1000, 1000);
+        } else if (ev.name=="DamageNotify"){
+            console.log(ev.name+":",ev);
+        }
+
+    });

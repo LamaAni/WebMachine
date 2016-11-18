@@ -1,0 +1,13 @@
+{
+  "name": "wd",
+  "version": "0.0.0",
+  "description": "Html desktop enviroment",
+  "main": "app.js",
+  "author": {
+    "name": "Zav Shotan"
+  },
+  "dependencies": {
+    "nw": "^0.18.0",
+    "x11": "^2.2.0"
+  }
+}
