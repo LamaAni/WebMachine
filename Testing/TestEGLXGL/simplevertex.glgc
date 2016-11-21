@@ -1,0 +1,7 @@
+// Position for the current point in the rectangle.
+attribute vec2 a_position;
+
+void main() 
+{
+	gl_Position = vPosition;
+}

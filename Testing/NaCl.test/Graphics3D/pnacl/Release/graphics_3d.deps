@@ -1,0 +1,94 @@
+# Updated by fix_deps.py
+pnacl/Release/graphics_3d.o: graphics_3d.cc \
+  /SDK/nacl_sdk/pepper_49/include/GLES2/gl2.h \
+  /SDK/nacl_sdk/pepper_49/include/GLES2/gl2platform.h \
+  /SDK/nacl_sdk/pepper_49/include/KHR/khrplatform.h matrix.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/cpp/graphics_3d.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/ppb_graphics_3d.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_bool.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_macros.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_completion_callback.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_stdint.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_instance.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_resource.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_graphics_3d.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/cpp/resource.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/cpp/instance_handle.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/cpp/pass_ref.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/cpp/instance.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/ppb_console.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_var.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/cpp/view.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/cpp/rect.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_rect.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_point.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_size.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/cpp/point.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/cpp/size.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/cpp/logging.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/cpp/module.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_module.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/ppb.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/ppb_core.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_time.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/cpp/core.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/cpp/var.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/cpp/var_array.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/lib/gl/gles2/gl2ext_ppapi.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/ppb_opengles2.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/dev/ppb_opengles2ext_dev.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/utility/completion_callback_factory.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/cpp/completion_callback.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_errors.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/cpp/output_traits.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/cpp/array_output.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_array_output.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/utility/completion_callback_factory_thread_traits.h \
+  /SDK/nacl_sdk/pepper_49/include/ppapi/utility/threading/lock.h
+graphics_3d.cc:
+/SDK/nacl_sdk/pepper_49/include/GLES2/gl2.h:
+/SDK/nacl_sdk/pepper_49/include/GLES2/gl2platform.h:
+/SDK/nacl_sdk/pepper_49/include/KHR/khrplatform.h:
+matrix.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/cpp/graphics_3d.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/ppb_graphics_3d.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_bool.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_macros.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_completion_callback.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_stdint.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_instance.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_resource.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_graphics_3d.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/cpp/resource.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/cpp/instance_handle.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/cpp/pass_ref.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/cpp/instance.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/ppb_console.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_var.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/cpp/view.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/cpp/rect.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_rect.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_point.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_size.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/cpp/point.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/cpp/size.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/cpp/logging.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/cpp/module.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_module.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/ppb.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/ppb_core.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_time.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/cpp/core.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/cpp/var.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/cpp/var_array.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/lib/gl/gles2/gl2ext_ppapi.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/ppb_opengles2.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/dev/ppb_opengles2ext_dev.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/utility/completion_callback_factory.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/cpp/completion_callback.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_errors.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/cpp/output_traits.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/cpp/array_output.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/c/pp_array_output.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/utility/completion_callback_factory_thread_traits.h:
+/SDK/nacl_sdk/pepper_49/include/ppapi/utility/threading/lock.h:

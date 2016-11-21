@@ -1,0 +1,2 @@
+export NODE_PATH=$HOME/WebMachine/node_modules:$NODE_PATH
+echo "Node path set to: $NODE_PATH"

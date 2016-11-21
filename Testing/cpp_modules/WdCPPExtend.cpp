@@ -1,34 +1,27 @@
 #include <node.h>
 //#include <node_buffer.h>
 
+// System
 #include <sys/ipc.h>
 #include <sys/shm.h>
-
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <X11/extensions/XShm.h>
-
 #include <cstdlib>
 #include <unistd.h>
 #include <cstring>
 #include <vector>
 
+// XLib
+#include <X11/X.h>
+#include <X11/Xlib.h>
+#include <X11/X.h>
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/extensions/XShm.h>
+
 // opengl
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <GL/glut.h>
-
-// gl for the x system
-#include <GL/glx.h>
-
-// egl (Webgl - Kronos)
-#include <EGL/egl.h>
 #include <GLES2/gl2.h>
-#include <GLES2/gl2ext.h>
-// opengl bindings $(pkg-config --libs gl)
-
-// SDL
-#include <SDL/SDL.h>
+#include <EGL/egl.h>
+#include <GL/gl.h>
+#include <GL/glx.h>
 
 namespace WDCppExtentions {
 
@@ -81,16 +74,16 @@ void DoConnectToDisplay(const FunctionCallbackInfo<Value>& args)
  
 	// glxContext=glXCreateContext(display,vi,0,true);
 	// glXMakeCurrent(display,DefaultRootWindow(display),glxContext);
-	SDL_Surface* screen;
-	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER)!=0)
-	{
-		screen = SDL_SetVideoMode(300, 300, 0, SDL_OPENGL);
-		if (screen == NULL)
-		{
-			printf("Could not set video mode: %s, \n", SDL_GetError());
-		}
-	}
-	else printf("Error while initializing SDL.\n");
+	// SDL_Surface* screen;
+	// if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER)!=0)
+	// {
+	// 	screen = SDL_SetVideoMode(300, 300, 0, SDL_OPENGL);
+	// 	if (screen == NULL)
+	// 	{
+	// 		printf("Could not set video mode: %s, \n", SDL_GetError());
+	// 	}
+	// }
+	// else printf("Error while initializing SDL.\n");
 }
 
 void DoCheckCurrentGLContext(const FunctionCallbackInfo<Value>& args)
@@ -100,9 +93,16 @@ void DoCheckCurrentGLContext(const FunctionCallbackInfo<Value>& args)
 	GLXContext current=glXGetCurrentContext();
 	if(current==NULL)
 	{
-		printf("No context found.\n");
+		printf("No GLX context found.\n");
 	}
-	else printf("Context ID: %d\n",current);
+	else printf("GLX Context ID: %d\n",current);
+
+	EGLContext cegl=eglGetCurrentContext();
+	if(cegl==NULL)
+	{
+		printf("No EGL context found.\n");
+	}
+	else printf("EGL Context ID: %d\n",cegl);
 
 	if(args.Length() >0 )
 	{
@@ -111,6 +111,7 @@ void DoCheckCurrentGLContext(const FunctionCallbackInfo<Value>& args)
 
 		printf("Sent texture is: %s\n",glIsTexture(tex)?"OK" : "Not FOund");
 	}
+
 }
 
 //////////////////////////////////

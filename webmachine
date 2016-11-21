@@ -1,0 +1,12 @@
+#!/bin/bash
+COREWMSRC="$HOME/WebMachine/Src"
+source "$COREWMSRC/prepare_node"
+
+# running the app
+if [ "$1" == '' ]; then
+	LOC="$COREWMSRC/Testing/browser_copyscreen_Test"
+else
+	LOC=$1
+fi
+echo "Starting $LOC"
+nw $LOC --enable-webgl --ignore-gpu-blacklist --enable-webgl-draft-extensions

@@ -50,9 +50,9 @@
     "v8_random_seed": 0,
     "v8_use_snapshot": "true",
     "want_separate_host_toolset": 0,
-    "nodedir": "/home/zav/.nw-gyp/0.17.0",
+    "nodedir": "/home/zav/.nw-gyp/0.16.0",
     "copy_dev_lib": "true",
     "standalone_static_library": 1,
-    "target": "0.17.0"
+    "target": "0.16.0"
   }
 }

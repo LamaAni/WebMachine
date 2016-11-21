@@ -3,14 +3,20 @@
     {
       "target_name": "WdCPPExtend",
       "sources": [ "WdCPPExtend.cpp" ],
+      "cflags" : ["$(pkg-config --cflags --libs egl glesv2 x11)"],
       "link_settings" : {
       		'libraries': [
-      			'$(pkg-config --cflags --libs x11)',
-      			'$(pkg-config --libs gl)',
-      			'$(pkg-config --libs glesv2)',
-      			'$(pkg-config --libs sdl)',
       			]
       },
-    }
+    },
+    {
+      "target_name": "TestGLX",
+      "sources": [ "TestGLX.cpp" ],
+      "cflags" : ["$(pkg-config --cflags --libs egl glesv2 x11)"],
+      "link_settings" : {
+          'libraries': [
+            ]
+      },
+    },
   ]
 }
