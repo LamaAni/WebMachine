@@ -422,11 +422,11 @@ event_loop(Display *dpy, Window win,
 static void
 usage(void)
 {
+   // prining information..
    printf("Usage:\n");
    printf("  -display <displayname>  set the display to run on\n");
    printf("  -info                   display OpenGL renderer info\n");
 }
-
 
 int
 main(int argc, char *argv[])
