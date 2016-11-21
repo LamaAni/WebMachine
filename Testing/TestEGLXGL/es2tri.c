@@ -422,7 +422,6 @@ event_loop(Display *dpy, Window win,
 static void
 usage(void)
 {
-   // prining information..
    printf("Usage:\n");
    printf("  -display <displayname>  set the display to run on\n");
    printf("  -info                   display OpenGL renderer info\n");
@@ -434,7 +433,7 @@ main(int argc, char *argv[])
    const int winWidth = 300, winHeight = 300;
    Display *x_dpy;
    Window win;
-   EGLSurface egl_surf;
+   EGLSurface egl_surf;ַ
    EGLContext egl_ctx;
    EGLDisplay egl_dpy;
    char *dpyName = NULL;
